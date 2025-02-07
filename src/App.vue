@@ -42,7 +42,7 @@
     </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
   .app{
     width: 100%;
     min-height: 100dvh;
@@ -64,7 +64,7 @@
   p{
     font-size: 2rem;
   }
-
+ 
   /*section*/
   section{
     width: 100%;
@@ -94,8 +94,8 @@
    background-color:rgb(253, 250, 250);
     border-radius: 2rem;
     box-shadow: -1px 10px 12px 4px rgba(0,0,0,0.24);
--webkit-box-shadow: -1px 10px 12px 4px rgba(0,0,0,0.24);
--moz-box-shadow: -1px 10px 12px 4px rgba(0,0,0,0.24);
+  -webkit-box-shadow: -1px 10px 12px 4px rgba(0,0,0,0.24);
+  -moz-box-shadow: -1px 10px 12px 4px rgba(0,0,0,0.24);
   }
 
 </style>
