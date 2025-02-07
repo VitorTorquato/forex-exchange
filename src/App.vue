@@ -57,6 +57,7 @@
     main{
       width: 100%;
       max-width: 1200px;
+      height: 100vh;
       margin: 0 auto;
       padding: 1.2rem 2.4rem;
 
@@ -69,23 +70,22 @@
 
   p{
     font-size: 2rem;
+    color: #6C757D;
   } 
 
     section{
     width: 100%;
-    height: 100vh;
+    height: fit-content;  
     padding: 2rem 1rem;
     display: flex;
     align-items: center;
     gap: 3.2rem;
+    margin-top: 3.2rem;
 
 
     .inputs_container{
     width: 28%;
-    height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
     gap: 2.8rem;
     padding: 2.4rem;
@@ -136,7 +136,7 @@
 
       .forex_tag{
         padding: 1rem 1.2rem;
-        background-color: gray;
+        background-color: #D6D8DB;
         border-radius: 1.4rem;
       }
 

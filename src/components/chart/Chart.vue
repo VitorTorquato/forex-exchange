@@ -44,19 +44,11 @@
             legend:{
                 display: true,
                 position:'top',
-                align:'end',
-                labels:{
-                    color:'green',
-                    font:{
-                        size:24,
-                        weight: 'bold'
-                    },
-                    usePointStyle: false, // Remove os ícones coloridos
-                    boxWidth: 0,
-                    padding:20
-                },             
+                align:'end',           
             },
-         
+            legend: {
+            display: false,  // Remover a legenda do gráfico
+          }
           },
           scales:{
                 x:{
@@ -74,7 +66,7 @@
                         drawBorder:true
                     },
                     ticks:{
-                        display:true
+                        display:false
                     }
                 }
             }
