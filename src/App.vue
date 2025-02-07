@@ -1,11 +1,13 @@
 <script >
   import "/node_modules/flag-icons/css/flag-icons.min.css";
 
+  import Chart from "./components/chart/Chart.vue";
   import Input from './components/input/Input.vue';
   export default{
     name:'App',
     components:{
-      Input
+      Input,
+      Chart
     }
   }
 </script>
@@ -35,7 +37,10 @@
 
                     <span class="currency">EUR/USD</span>
                   </div>
-
+                  
+                  <div class="chart">
+                    <Chart/>
+                  </div>
 
               </div>
           </section>
@@ -68,7 +73,7 @@
 
     section{
     width: 100%;
-    height: calc(100vh - 130px);
+    height: 100vh;
     padding: 2rem 1rem;
     display: flex;
     align-items: center;
@@ -88,8 +93,9 @@
   }
 
   .chart_container{
-    flex: 1;
-    height: 90%;
+    width: 100%;
+    max-width: 700px;
+    height: 100%;
     max-height: 45rem;
     padding: 2rem;
    background-color:rgb(253, 250, 250);
@@ -97,6 +103,8 @@
     box-shadow: -1px 10px 12px 4px rgba(0,0,0,0.24);
   -webkit-box-shadow: -1px 10px 12px 4px rgba(0,0,0,0.24);
   -moz-box-shadow: -1px 10px 12px 4px rgba(0,0,0,0.24);
+
+ 
 
 
 
@@ -140,6 +148,12 @@
       font-weight: bold;
     }
 
+  }
+  
+  .chart{
+    max-width: 100%;
+    max-height: fit-content;
+    overflow: hidden;
   }
 
   }
