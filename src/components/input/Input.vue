@@ -16,6 +16,7 @@
 </template>
 
 <style scoped>
+
     .input_container{
         width: 100%;
         border: 2px solid #222;
@@ -23,12 +24,5 @@
         padding-right: 1rem;
     }
 
-    select{
-        width: 100%;
-        padding: 1.2rem 1.5rem;
-        border: none;
-        background-color: transparent;
-        outline: none;
 
-    }
 </style>

@@ -1,3 +1,4 @@
+
 *{
   box-sizing: border-box;
   margin: 0;
@@ -8,6 +9,9 @@
     font-size: 62.5%;
 }
 
+
+
+
 body {
   min-height: 100vh;
   font-size: 1.6rem;
@@ -15,3 +19,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } 
+
+input,select{
+  width: 100%;
+  padding: 1.2rem 1.5rem;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
