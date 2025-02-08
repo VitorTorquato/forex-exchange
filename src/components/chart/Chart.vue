@@ -27,11 +27,11 @@
     data() {
       return {
         data: {
-          labels: ['15M', '1H', '1D' , '1W' , '1M'],
+          labels: ['12','11','10','20','8','5','7','5','4'],
           datasets: [
             {
               label: '$ 1.0000.83',
-              data: [10, 20, 15,22 ,30],
+              data: [20, 15,22 ,30,56,53,21,12,10],
               borderColor: 'green',
               backgroundColor: 'rgba(255, 0, 0, 1)',
               fill: true
@@ -57,7 +57,7 @@
                         drawBorder:true
                     },
                     ticks:{
-                        display:true
+                        display:false
                     }
                 },
                 y:{
@@ -66,7 +66,7 @@
                         drawBorder:true
                     },
                     ticks:{
-                        display:false
+                        display:true
                     }
                 }
             }

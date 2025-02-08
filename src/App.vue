@@ -1,5 +1,6 @@
 <script >
-  import "/node_modules/flag-icons/css/flag-icons.min.css";
+  import "/node_modules/currency-flags/dist/currency-flags.min.css";
+  import "/node_modules/currency-flags/dist/currency-flags.css";
 
   import Chart from "./components/chart/Chart.vue";
   import Input from './components/input/Input.vue';
@@ -21,6 +22,9 @@
           <section>
               <div class="inputs_container">
                     <Input/>     
+                    <div>
+                      
+                    </div>
                     <Input/>
               </div>
 
@@ -30,9 +34,9 @@
                 <div class="flags_currency_container">
                    
                   <div class="flags_wrapper">
-                      <span class="flags fi fi-eu"></span>
-                      <span class="flags fi fi-br"></span>
-                      <span class="forex_tag">forex.com</span>
+                      <span class="flags currency-flag currency-flag-usd"></span>
+                      <span class="flags currency-flag currency-flag-eur"></span>
+                  
                     </div>
 
                     <span class="currency">EUR/USD</span>
@@ -117,30 +121,19 @@
       display: flex;
       align-items: center;
       gap: 1.2rem;
-
+      
 
       .flags{
         width: 4rem;
         height: 4rem;
         background-color: red;
         display: flex;
-        align-items: center;
-        justify-content: center;
         padding: .5rem;
         border-radius: 50%;
         background-size: cover;
-     
+        background-position: center;
       }
 
-    
-
-      .forex_tag{
-        padding: 1rem 1.2rem;
-        background-color: #D6D8DB;
-        border-radius: 1.4rem;
-      }
-
-      
     }
     
     .currency{
