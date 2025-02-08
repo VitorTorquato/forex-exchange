@@ -66,7 +66,8 @@ export default {
               label: `Data for ${selectedLabel.value}`,
               data: chartDataSets[selectedLabel.value],
               borderColor: "black",
-              fill: false
+              backgroundColor: 'rgba(144, 238, 144, 1)',
+              fill: true
             }
           ]
         },
