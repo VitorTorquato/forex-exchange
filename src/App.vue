@@ -102,8 +102,8 @@
   .chart_container{
     width: 100%;
     max-width: 700px;
-    height: 100%;
-    max-height: 45rem;
+    height: fit-content;
+    max-height: 50rem;
     padding: 2rem;
    background-color:rgb(253, 250, 250);
     border-radius: 2rem;
@@ -140,7 +140,7 @@
     }
     
     .currency{
-      font-size: 3.4rem;
+      font-size: 2.4rem;
       font-weight: bold;
     }
 
