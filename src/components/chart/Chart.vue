@@ -1,5 +1,14 @@
 <template>
-    <Line :data="data" :options="options" />
+  
+    <div>
+      <div>
+        <input type="checkbox">
+      </div>
+
+      <Line :data="data" :options="options" />
+    </div>
+  
+    
   </template>
   
   <script>
@@ -16,7 +25,7 @@
   } from 'chart.js'
   import { Line } from 'vue-chartjs'
   
-  // Registrar os componentes necessários para gráficos de linha
+ 
   ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend)
   
   export default {
@@ -32,7 +41,7 @@
             {
               label: '$ 1.0000.83',
               data: [20, 15,22 ,30,56,53,21,12,10],
-              borderColor: 'green',
+              borderColor: 'black',
               backgroundColor: 'rgba(255, 0, 0, 1)',
               fill: true
             }
