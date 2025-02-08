@@ -1,14 +1,30 @@
 <script >
   import "/node_modules/currency-flags/dist/currency-flags.min.css";
-  import "/node_modules/currency-flags/dist/currency-flags.css";
 
   import Chart from "./components/chart/Chart.vue";
-  import Input from './components/input/Input.vue';
   export default{
     name:'App',
     components:{
-      Input,
       Chart
+    },
+    data(){
+      return{
+        flagOne:'USD',
+        flagTwo: 'EUR'
+      }
+    },
+    methods:{
+      handleChangeFlag(e , flagType){
+
+        
+
+        if (flagType === 'one'){
+          this.flagOne = e.target.value;
+        } else if (flagType === 'two'){
+          this.flagTwo = e.target.value;
+        }
+
+      }
     }
   }
 </script>
@@ -21,27 +37,50 @@
 
           <section>
               <div class="inputs_container">
-                    <Input/>     
+                
+            <div class="input-wrapper">
+              <select type="select" name="currency" id="currency" @change="handleChangeFlag($event  , 'one')">
+                  <option value="USD">USD</option>
+                  <option value="BRL">BRL</option>
+                  <option value="EUR">EUR</option>
+              </select>
+            </div>
+     
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5"/>
                         </svg>
                     </div>
-                    <Input/>
+              
+            <div class="input-wrapper">
+              <select type="select" name="currency" id="currency"  @change="handleChangeFlag($event , 'two')">
+                  <option value="USD">USD</option>
+                  <option value="BRL">BRL</option>
+                  <option value="EUR">EUR</option>
+              </select>
+            </div>
+              
               </div>
 
 
               <div class="chart_container">
                   
-                <div class="flags_currency_container">
+                <div class="chart-header">
                    
-                  <div class="flags_wrapper">
-                      <span class="flags currency-flag currency-flag-usd"></span>
-                      <span class="flags currency-flag currency-flag-eur"></span>
-                  
+                  <div class="flags_currency_container">
+                      <div class="flags_wrapper">
+                        <span :class="`flags currency-flag currency-flag-${flagOne.toLowerCase() }`"></span>
+                        <span :class="`flags currency-flag currency-flag-${flagTwo.toLowerCase()}`"></span>
+                      </div>
+                      <span class="currency">{{ flagOne }}/{{ flagTwo }}</span>
+                      
                     </div>
 
-                    <span class="currency">EUR/USD</span>
+                    <div class="currency-compare">
+                      <span>1USD = </span>
+                      <span>0,96830 EUR</span>
+                    </div>
+
                   </div>
                   
                   <div class="chart">
@@ -96,6 +135,13 @@
     flex-direction: column;
     gap: 2.8rem;
     padding: 2.4rem;
+
+    .input-wrapper{
+      width: 100%;
+        border: 2px solid #222;
+        border-radius: 1rem;
+        padding-right: 1rem;
+    }
     
   }
 
@@ -113,7 +159,11 @@
 
  
 
-
+.chart-header{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   .flags_currency_container{
     display: flex;
@@ -145,6 +195,13 @@
     }
 
   }
+
+  .currency-compare{
+    font-size: 2rem;
+    font-weight: bold;
+
+  }
+}
   
   .chart{
     max-width: 100%;
