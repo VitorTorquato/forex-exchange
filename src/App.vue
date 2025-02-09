@@ -17,13 +17,17 @@
     methods:{
       handleChangeFlag(e , flagType){
 
-        
-
+        const newValue = e.target.value
         if (flagType === 'one'){
-          this.flagOne = e.target.value;
+          this.flagOne = newValue;
         } else if (flagType === 'two'){
-          this.flagTwo = e.target.value;
+          this.flagTwo = newValue;
         }
+
+        if(this.flagOne === this.flagTwo){
+          window.location.reload();
+        }
+         
 
       },
 
@@ -58,6 +62,7 @@
                 
             <div class="input-wrapper">
               <select type="select" name="currency" id="currency" @change="handleChangeFlag($event  , 'one')">
+                  <option value="">USD</option>
                   <option v-for="currency in currenciesName" :key="currency" :value="currency">{{ currency }}</option>
               </select>
             </div>
@@ -70,7 +75,8 @@
               
             <div class="input-wrapper">
               <select type="select" name="currency" id="currency"  @change="handleChangeFlag($event , 'two')">
-                <option v-for="currency in currenciesName" :key="currency" :value="currency">{{ currency }}</option>
+                <option  value="">EUR</option>
+                <option  v-for="currency in currenciesName" :key="currency"  :value="currency">{{ currency }}</option>
               </select>
             </div>
               
@@ -155,6 +161,8 @@
         border: 2px solid #222;
         border-radius: 1rem;
         padding-right: 1rem;
+
+      
     }
     
   }
