@@ -10,7 +10,8 @@
     data(){
       return{
         flagOne:'USD',
-        flagTwo: 'EUR'
+        flagTwo: 'EUR',
+        currenciesName:null
       }
     },
     methods:{
@@ -24,7 +25,24 @@
           this.flagTwo = e.target.value;
         }
 
+      },
+
+      async handleFetchCurrencyData(){
+
+        const req = await  fetch(`https://marketdata.tradermade.com/api/v1/live_currencies_list?api_key=vlxciMCTw1zbfqP0ADqk`)
+        
+        const data = await req.json()
+
+        this.currenciesName = Object.keys(data.available_currencies);
+
+        console.log(this.currenciesName)
+        
+     
+    
       }
+    },
+    mounted(){
+      this.handleFetchCurrencyData()
     }
   }
 </script>
@@ -40,9 +58,7 @@
                 
             <div class="input-wrapper">
               <select type="select" name="currency" id="currency" @change="handleChangeFlag($event  , 'one')">
-                  <option value="USD">USD</option>
-                  <option value="BRL">BRL</option>
-                  <option value="EUR">EUR</option>
+                  <option v-for="currency in currenciesName" :key="currency" :value="currency">{{ currency }}</option>
               </select>
             </div>
      
@@ -54,9 +70,7 @@
               
             <div class="input-wrapper">
               <select type="select" name="currency" id="currency"  @change="handleChangeFlag($event , 'two')">
-                  <option value="USD">USD</option>
-                  <option value="BRL">BRL</option>
-                  <option value="EUR">EUR</option>
+                <option v-for="currency in currenciesName" :key="currency" :value="currency">{{ currency }}</option>
               </select>
             </div>
               
