@@ -19,16 +19,20 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted , watch} from "vue";
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
 export default {
-  setup() {
+  props:{
+    currency1:String,
+    currency2:String
+  },
+  setup(props) {
     const chartCanvas = ref(null);
     let chartInstance = null;
-    const selectedLabel = ref("15min");
+    const selectedLabel = ref("24Hours");
     const chartData = ref([]);
     const labelsData = ref([]);
 
@@ -41,6 +45,11 @@ export default {
     ]);
 
     const fetchData = async () => {
+      if (!props.currency1 || !props.currency2) {
+      console.error("Currency not defined");
+      return;
+    }
+
   const labelObj = labels.value.find(label => label.value === selectedLabel.value);
   const interval = labelObj.interval;
   const period = labelObj.period;
@@ -66,8 +75,10 @@ export default {
   const formattedStartDate = formatDateTimeUTC(startDate);
   const formattedEndDate = formatDateTimeUTC(endDate);
 
+  let currencyPair = `${props.currency1}${props.currency2}`;
+  
   // Construção da URL com parâmetros corretos
-  let url = `https://marketdata.tradermade.com/api/v1/timeseries?currency=EURUSD&api_key=vlxciMCTw1zbfqP0ADqk&start_date=${formattedStartDate}&end_date=${formattedEndDate}&format=records`;
+  let url = `https://marketdata.tradermade.com/api/v1/timeseries?currency=${currencyPair}&api_key=vlxciMCTw1zbfqP0ADqk&start_date=${formattedStartDate}&end_date=${formattedEndDate}&format=records`;
 
   if (interval !== "daily") {
     url += `&interval=${interval}&period=${period}`;
@@ -76,7 +87,7 @@ export default {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log("Dados recebidos:", data);
+    //console.log("Data received:", data);
 
     if (data.quotes) {
       labelsData.value = data.quotes.map(quote => quote.date);
@@ -86,14 +97,9 @@ export default {
       console.error("Erro na resposta da API:", data);
     }
   } catch (error) {
-    console.error("Erro ao buscar dados da API:", error);
+    throw new Error('Errod to get data' , error);
   }
 };
-
-
-
-
-
 
 
     const createChart = () => {
@@ -131,6 +137,12 @@ export default {
       fetchData();
     };
 
+    watch(() => [props.currency1, props.currency2], ([newCurrency1, newCurrency2], [oldCurrency1, oldCurrency2]) => {
+    if (newCurrency1 !== oldCurrency1 || newCurrency2 !== oldCurrency2) {
+      fetchData();
+    }
+  });
+
     onMounted(() => {
       createChart()
       fetchData();
@@ -141,8 +153,11 @@ export default {
       selectedLabel,
       handleLabelClick,
       chartCanvas
-    };
-  }
+    }
+    
+    
+  },
+ 
 };
 </script>
 

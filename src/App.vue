@@ -42,10 +42,9 @@
       toggleDropdown(flagType) {
         if (flagType === 'one') {
           this.isDropdownOpenOne = !this.isDropdownOpenOne;
-          this.isDropdownOpenTwo = false; 
+         
         } else if (flagType === 'two') {
           this.isDropdownOpenTwo = !this.isDropdownOpenTwo;
-          this.isDropdownOpenOne = false; 
         }
       },
 
@@ -56,13 +55,13 @@
           this.flagTwo = currency;
         }
 
-        this.isDropdownOpenOne = false;
-        this.isDropdownOpenTwo = false;
 
         // Previne a troca de moeda para o mesmo valor
         if (this.flagOne === this.flagTwo) {
           window.location.reload()
         }
+
+        
       },
 
       async handleFetchCurrencyData() {
@@ -158,7 +157,7 @@
           </div>
 
           <div class="chart">
-            <Chart />
+            <Chart :currency1="flagOne" :currency2="flagTwo" />
           </div>
         </div>
       </section>
