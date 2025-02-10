@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Botões para selecionar o período de tempo -->
     <div class="labels-container">
       <button
         v-for="(label, index) in labels"
@@ -12,8 +11,7 @@
         {{ label.label }}
       </button>
     </div>
-
-   
+    
     <div class="chart-container">
       <canvas ref="chartCanvas"></canvas>
     </div>
@@ -24,74 +22,117 @@
 import { ref, onMounted } from "vue";
 import { Chart, registerables } from "chart.js";
 
-// Registrar os componentes necessários do Chart.js
 Chart.register(...registerables);
 
 export default {
   setup() {
     const chartCanvas = ref(null);
     let chartInstance = null;
+    const selectedLabel = ref("15min");
+    const chartData = ref([]);
+    const labelsData = ref([]);
 
-    // Opções para os botões
     const labels = ref([
-      { label: "15 Minutes", value: "15min" },
-      { label: "1 Hour", value: "1h" },
-      { label: "1 Week", value: "1week" },
-      { label: "1 Month", value: "1month" },
-      { label: "1 Year", value: "1year" }
+      { label: "48 Hours", value: "48Hours", interval: "hourly", period: 24 },
+      { label: "1 Week", value: "1Week", interval: "daily", period: 7 },
+      { label: "1 Month", value: "1Month", interval: "daily", period: 30 },
+      { label: "1 Year", value: "1Year", interval: "daily", period: 365 },
+    
     ]);
 
-    const selectedLabel = ref("15min");
+    const fetchData = async () => {
+  const labelObj = labels.value.find(label => label.value === selectedLabel.value);
+  const interval = labelObj.interval;
+  const period = labelObj.period;
 
-    // Dados do gráfico para cada período
-    const chartDataSets = {
-      "15min": [10, 12, 14, 19, 12, 11],
-      "1h": [10, 7, 20, 17, 15, 10],
-      "1week": [15, 25, 19, 12, 16, 11],
-      "1month": [20, 30, 25, 26.8, 30, 31],
-      "1year": [30, 36, 42, 50,55,49.1]
-    };
+  // Obtém a data e hora atuais em UTC e reduz 1 minuto para evitar erro de "futuro"
+  const endDate = new Date();
+  endDate.setMinutes(endDate.getMinutes() - 1);
+
+  let startDate = new Date(endDate);
+
+  // Ajuste do `startDate` baseado no intervalo
+  if (interval === "hourly") {
+    startDate.setDate(startDate.getDay() - 1);
+  } else if (interval === "daily") {
+    startDate.setDate(endDate.getDate() - period); 
+  }
+
+  // Função para formatar data e hora no padrão UTC (YYYY-MM-DD-HH:MM)
+  const formatDateTimeUTC = (date) => {
+    return date.toISOString().slice(0, 16).replace("T", "-"); // Formato correto `YYYY-MM-DD-HH:MM`
+  };
+
+  const formattedStartDate = formatDateTimeUTC(startDate);
+  const formattedEndDate = formatDateTimeUTC(endDate);
+
+  // Construção da URL com parâmetros corretos
+  let url = `https://marketdata.tradermade.com/api/v1/timeseries?currency=EURUSD&api_key=vlxciMCTw1zbfqP0ADqk&start_date=${formattedStartDate}&end_date=${formattedEndDate}&format=records`;
+
+  if (interval !== "daily") {
+    url += `&interval=${interval}&period=${period}`;
+  }
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log("Dados recebidos:", data);
+
+    if (data.quotes) {
+      labelsData.value = data.quotes.map(quote => quote.date);
+      chartData.value = data.quotes.map(quote => quote.close);
+      createChart();
+    } else {
+      console.error("Erro na resposta da API:", data);
+    }
+  } catch (error) {
+    console.error("Erro ao buscar dados da API:", error);
+  }
+};
+
+
+
+
+
+
 
     const createChart = () => {
       if (chartInstance) {
-        chartInstance.destroy(); // Remove o gráfico antigo antes de criar um novo
+        chartInstance.destroy();
       }
-
+      
       chartInstance = new Chart(chartCanvas.value, {
         type: "line",
         data: {
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+          labels: labelsData.value,
           datasets: [
             {
               label: `Data for ${selectedLabel.value}`,
-              data: chartDataSets[selectedLabel.value],
+              data: chartData.value,
               borderColor: "black",
-              backgroundColor: 'rgba(144, 238, 144, 1)',
-              fill: true
+              fill: false
             }
           ]
         },
         options: {
           responsive: true,
-          plugins:{
-            legend:{display: false}
+          plugins: {
+            legend: { display: false }
           },
-          scales:{
-            x:{display:false}
+          scales: {
+            x: { display: false }
           }
-          
         }
-
       });
     };
 
     const handleLabelClick = (value) => {
       selectedLabel.value = value;
-      createChart(); // Atualiza o gráfico ao clicar
+      fetchData();
     };
 
     onMounted(() => {
-      createChart(); // Cria o gráfico ao iniciar
+      fetchData();
     });
 
     return {
@@ -103,6 +144,8 @@ export default {
   }
 };
 </script>
+
+
 
 <style scoped>
 .labels-container {
