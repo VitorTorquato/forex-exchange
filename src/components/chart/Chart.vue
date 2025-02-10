@@ -109,8 +109,9 @@ export default {
             {
               label: `Data for ${selectedLabel.value}`,
               data: chartData.value,
-              borderColor: "black",
-              fill: false
+              borderColor: "#8ECB3E",
+              backgroundColor:'#F4FAED',
+              fill: true
             }
           ]
         },
