@@ -181,6 +181,11 @@
         font-size: 6rem;
         font-weight: bold;
         margin-bottom: .8rem;
+        
+        @media(max-width:425px){
+          font-size: 4.8rem;
+          text-align: center;
+        }
       }
 
       p {
@@ -198,7 +203,7 @@
         margin-top: 3.2rem;
 
         .inputs_container {
-          width: 28%;
+          width: 100%;
           display: flex;
           align-items: center;
           flex-direction: column;
@@ -262,6 +267,11 @@
           .swap-icon {
             cursor: pointer;
           }
+
+
+          @media(min-width:768px){
+            width: 30%;
+          }
         }
 
         .chart_container {
@@ -313,12 +323,19 @@
               span{
                 font-size: 2rem;
                 font-weight: bold;
+                @media(max-width:425px){
+                  font-size: 1.4rem;
+                }
               }
           
             .porcentage{
               font-size: 1.4rem;
               color: rgb(45, 184, 45);
               display: block;
+
+              @media (max-width:425px){
+                font-size: 1rem;
+              }
             }
           }
         }
@@ -327,6 +344,10 @@
           max-width: 100%;
           max-height: fit-content;
           overflow: hidden;
+        }
+
+        @media(max-width: 700px){
+          flex-direction: column;
         }
       }
     }
