@@ -33,7 +33,7 @@ export default {
     const labelsData = ref([]);
 
     const labels = ref([
-      { label: "48 Hours", value: "48Hours", interval: "hourly", period: 24 },
+      { label: "24 Hours", value: "24Hours", interval: "hourly", period: 1 },
       { label: "1 Week", value: "1Week", interval: "daily", period: 7 },
       { label: "1 Month", value: "1Month", interval: "daily", period: 30 },
       { label: "1 Year", value: "1Year", interval: "daily", period: 365 },
@@ -45,15 +45,15 @@ export default {
   const interval = labelObj.interval;
   const period = labelObj.period;
 
-  // Obtém a data e hora atuais em UTC e reduz 1 minuto para evitar erro de "futuro"
+  // Getting date e removin 1 minuto to not stay in the future"
   const endDate = new Date();
   endDate.setMinutes(endDate.getMinutes() - 1);
 
   let startDate = new Date(endDate);
 
-  // Ajuste do `startDate` baseado no intervalo
+  // Ajuste do `startDate
   if (interval === "hourly") {
-    startDate.setDate(startDate.getDay() - 1);
+    startDate.setDate(endDate.getDate() - period);
   } else if (interval === "daily") {
     startDate.setDate(endDate.getDate() - period); 
   }
@@ -132,6 +132,7 @@ export default {
     };
 
     onMounted(() => {
+      createChart()
       fetchData();
     });
 
