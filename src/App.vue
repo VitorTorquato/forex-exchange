@@ -151,8 +151,8 @@
             </div>
 
             <div class="currency-compare">
-              <span>1USD = </span>
-              <span>0.96830 EUR</span>
+              <span>$ 1.000083</span>
+              <span class="porcentage">0.00060(0.0000595%)</span>
             </div>
           </div>
 
@@ -307,8 +307,19 @@
           }
 
           .currency-compare {
-            font-size: 2rem;
-            font-weight: bold;
+            
+              text-align: end;
+
+              span{
+                font-size: 2rem;
+                font-weight: bold;
+              }
+          
+            .porcentage{
+              font-size: 1.4rem;
+              color: rgb(45, 184, 45);
+              display: block;
+            }
           }
         }
 
