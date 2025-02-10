@@ -29,6 +29,15 @@ Chart.register(...registerables);
 
 export default {
   setup() {
+
+    const getDataForChart = async () => {
+      const req = await fetch('https://marketdata.tradermade.com/api/v1/timeseries?currency=EURUSD&api_key=vlxciMCTw1zbfqP0ADqk&start_date=2019-10-01&end_date=2019-10-10&format=records')
+      const data = await req.json();
+      console.log(data);
+
+    };
+
+
     const chartCanvas = ref(null);
     let chartInstance = null;
 
@@ -89,6 +98,9 @@ export default {
       selectedLabel.value = value;
       createChart(); // Atualiza o gráfico ao clicar
     };
+
+
+
 
     onMounted(() => {
       createChart(); // Cria o gráfico ao iniciar

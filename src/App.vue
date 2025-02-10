@@ -16,6 +16,28 @@
         isDropdownOpenTwo: false
       };
     },
+   // created: () => {
+      // var reconnectInterval = 1000 * 10
+      // const ws = new WebSocket('wss://marketdata.tradermade.com/feedadv');
+
+
+      // ws.onopen = () => {
+      //   console.log('Connected')
+      //   const data = ws.send("{\"userKey\":\"wskPdYesHYRpruxLFFFw\", \"symbol\":\"GBPUSD\"}")
+      //   console.log(data)
+      // }
+
+      // ws.onmessage = (event) => {
+      //   console.log(event)
+      // }
+
+      // ws.onclose = () =>{
+      //   console.log('socket close : will reconnect in' + reconnectInterval);
+      //   setTimeout(reconnectInterval)
+      // }
+
+     
+    //},
     methods: {
       toggleDropdown(flagType) {
         if (flagType === 'one') {
@@ -47,7 +69,12 @@
         const req = await fetch(`https://marketdata.tradermade.com/api/v1/live_currencies_list?api_key=vlxciMCTw1zbfqP0ADqk`);
         const data = await req.json();
         this.currenciesName = Object.keys(data.available_currencies);
-        console.log(this.currenciesName);
+      
+      },
+
+      getWebSocketData(){
+
+          console.log(ws)
       }
     },
     mounted() {
