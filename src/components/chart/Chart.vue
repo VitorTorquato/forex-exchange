@@ -108,9 +108,8 @@ export default {
           datasets: [
             {
               label: `Data for ${selectedLabel.value}`,
-              data: chartData.value,
-              borderColor: "black",
-              fill: false
+
+
             }
           ]
         },

@@ -10,7 +10,6 @@
                 <option value="USD">USD</option>
                 <option value="BRL">BRL</option>
                 <option value="EUR">EUR</option>
-                <option value="BIT">BIT</option>
             </select>
         </div>
 </template>
@@ -18,10 +17,7 @@
 <style scoped>
 
     .input_container{
-        width: 100%;
-        border: 2px solid #222;
-        border-radius: 1rem;
-        padding-right: 1rem;
+      
     }
 
 
