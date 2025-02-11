@@ -275,7 +275,7 @@
           }
 
 
-          @media(min-width:768px){
+          @media(min-width:769px){
             width: 30%;
           }
         }
@@ -362,7 +362,7 @@
     @media(max-width:425px){
      
       .chart_container{
-        max-height: 35rem;
+        max-height: 38rem;
       }
     }
     @media (min-width: 426px) and (max-width: 768px) {
@@ -373,7 +373,7 @@
     
 
   .chart_container {
-    max-height: 50rem;
+    max-height: 54rem;
   }
     }
     
