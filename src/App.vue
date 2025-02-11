@@ -181,16 +181,22 @@
         font-size: 6rem;
         font-weight: bold;
         margin-bottom: .8rem;
-        
-        @media(max-width:425px){
-          font-size: 4.8rem;
+
+        @media(max-width: 425px){
           text-align: center;
+          font-size: 3.4rem;
         }
+        
       }
 
       p {
         font-size: 2rem;
         color: #6C757D;
+
+        @media(max-width: 425px){
+          text-align: center;
+          font-size: 1.6rem;
+        }
       }
 
       section {
@@ -277,8 +283,8 @@
         .chart_container {
           width: 100%;
           max-width: 700px;
-          height: fit-content;
-          max-height: 50rem;
+          height:55rem;
+     
           padding: 2rem;
           background-color: rgb(253, 250, 250);
           border-radius: 2rem;
@@ -346,10 +352,30 @@
           overflow: hidden;
         }
 
-        @media(max-width: 700px){
+        @media(max-width: 768px){
           flex-direction: column;
         }
       }
     }
+
+    /*responsive layout*/
+    @media(max-width:425px){
+     
+      .chart_container{
+        max-height: 35rem;
+      }
+    }
+    @media (min-width: 426px) and (max-width: 768px) {
+
+      .title,p{
+        text-align: center;
+      }
+    
+
+  .chart_container {
+    max-height: 50rem;
+  }
+    }
+    
   }
 </style>

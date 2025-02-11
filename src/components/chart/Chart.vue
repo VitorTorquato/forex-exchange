@@ -115,7 +115,10 @@ export default {
               label: `Data for ${selectedLabel.value}`,
               data: chartData.value,
               borderColor: "black",
-              fill: false
+              borderWidth: 1,
+              fill: false,
+              pointRadius: 0, // Esconde os pontos padrão
+              pointHoverRadius: 5
             }
           ]
         },
@@ -124,8 +127,15 @@ export default {
           plugins: {
             legend: { display: false }
           },
+          interaction: {
+        mode: "index", // Garante que todos os pontos na mesma posição X fiquem visíveis
+        intersect: false,
+      },
           scales: {
-            x: { display: false }
+            x: { display: false },
+            y: { 
+          position: "right", // Move os valores do eixo Y para a direita
+        }
           }
         }
       });
@@ -162,7 +172,7 @@ export default {
 
 
 
-<style scoped>
+<style lang="scss" scoped>
 .labels-container {
   width: 100%;
   display: flex;
@@ -171,27 +181,40 @@ export default {
   flex-wrap: wrap;
   gap: 10px;
   margin:2.4rem 0 3.6rem 0;
+  
+  .label-button {
+    padding: 10px;
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    transition: 0.3s;
+  }
+
+  .label-button.active {
+    background-color:transparent;
+    color: #121212;
+    border: 1px solid #121212;
+  }
 }
 
-.label-button {
-  padding: 10px 15px;
-  border: none;
-  background-color: #ccc;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: 0.3s;
-}
 
-.label-button.active {
-  background-color:transparent;
-  color: #121212;
-  border: 1px solid #121212;
-}
 
 .chart-container {
   width: 100%;
-  max-width: 600px;
-  height: 400px;
+}
+
+/*responsive layout*/
+@media(max-width:425px){
+    .labels-container{
+      gap: .5rem;
+      justify-content: flex-start;
+
+      .label-button{
+        font-size: 1rem;
+      }
+
+    }
 }
 </style>
