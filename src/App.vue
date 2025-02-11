@@ -13,31 +13,11 @@
         flagTwo: 'EUR',
         currenciesName: null,
         isDropdownOpenOne: false,
-        isDropdownOpenTwo: false
+        isDropdownOpenTwo: false,
+        exchangeRate: null, // Valor da taxa de câmbio
+        percentageChange: null,
       };
     },
-   // created: () => {
-      // var reconnectInterval = 1000 * 10
-      // const ws = new WebSocket('wss://marketdata.tradermade.com/feedadv');
-
-
-      // ws.onopen = () => {
-      //   console.log('Connected')
-      //   const data = ws.send("{\"userKey\":\"wskPdYesHYRpruxLFFFw\", \"symbol\":\"GBPUSD\"}")
-      //   console.log(data)
-      // }
-
-      // ws.onmessage = (event) => {
-      //   console.log(event)
-      // }
-
-      // ws.onclose = () =>{
-      //   console.log('socket close : will reconnect in' + reconnectInterval);
-      //   setTimeout(reconnectInterval)
-      // }
-
-     
-    //},
     methods: {
       toggleDropdown(flagType) {
         if (flagType === 'one') {
@@ -71,13 +51,43 @@
       
       },
 
-      getWebSocketData(){
+      connectWebSocket(){
 
-          console.log(ws)
+        
+        const ws = new WebSocket('wss://marketdata.tradermade.com/feedadv');
+        
+      
+        ws.onopen = () => {
+          console.log('Connected')
+          
+          const data = {
+            userKey : "wskPdYesHYRpruxLFFFw",
+            symbol: "EURUSD",
+          
+          }
+          ws.send(JSON.stringify(data))
+          console.log(data)
+        }
+
+        ws.onmessage = (event) => {
+          const response = JSON.parse(event.data);
+
+          if(response.ts && response.bid){
+            const ts = response.ts;
+            const bid = response.bid
+            console.log('timeStamp:', ts)
+            console.log('bid:', bid)
+
+            this.exchangeRate = ts;
+            this.percentageChange = bid
+          }
+
+        }
       }
     },
     mounted() {
       this.handleFetchCurrencyData();
+      this.connectWebSocket();
     }
   };
 </script>
@@ -151,8 +161,8 @@
             </div>
 
             <div class="currency-compare">
-              <span>$ 1.000083</span>
-              <span class="porcentage">0.00060(0.0000595%)</span>
+              <span>$ {{ exchangeRate }}</span>
+              <span class="porcentage">{{ percentageChange }}</span>
             </div>
           </div>
 
