@@ -45,7 +45,7 @@
       },
 
       async handleFetchCurrencyData() {
-        const req = await fetch(`https://marketdata.tradermade.com/api/v1/live_currencies_list?api_key=vlxciMCTw1zbfqP0ADqk`);
+        const req = await fetch(`https://marketdata.tradermade.com/api/v1/live_currencies_list?api_key=bcPlgfur113zCz71ZrMm`);
         const data = await req.json();
         this.currenciesName = Object.keys(data.available_currencies);
       

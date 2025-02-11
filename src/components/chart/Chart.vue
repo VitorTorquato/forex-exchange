@@ -77,7 +77,7 @@ export default {
   let currencyPair = `${props.currency1}${props.currency2}`;
   
   // Construção da URL com parâmetros corretos
-  let url = `https://marketdata.tradermade.com/api/v1/timeseries?currency=${currencyPair}&api_key=vlxciMCTw1zbfqP0ADqk&start_date=${formattedStartDate}&end_date=${formattedEndDate}&format=records`;
+  let url = `https://marketdata.tradermade.com/api/v1/timeseries?currency=${currencyPair}&api_key=bcPlgfur113zCz71ZrMm&start_date=${formattedStartDate}&end_date=${formattedEndDate}&format=records`;
 
   if (interval !== "daily") {
     url += `&interval=${interval}&period=${period}`;
