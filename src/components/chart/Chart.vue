@@ -32,14 +32,15 @@ export default {
   setup(props) {
     const chartCanvas = ref(null);
     let chartInstance = null;
-    const selectedLabel = ref("24Hours");
+    const selectedLabel = ref("5Days");
     const chartData = ref([]);
     const labelsData = ref([]);
 
     const labels = ref([
-      { label: "24 Hours", value: "24Hours", interval: "hourly", period: 1 },
-      { label: "1 Week", value: "1Week", interval: "daily", period: 7 },
+      { label: "5 Days", value: "5Days", interval: "daily", period: 5 },
+      { label: "2 Weeks", value: "2Weeks", interval: "daily", period: 14 },
       { label: "1 Month", value: "1Month", interval: "daily", period: 30 },
+      { label: "6 Months", value: "6Months", interval: "daily", period: 182 },
       { label: "1 Year", value: "1Year", interval: "daily", period: 365 },
     
     ]);
@@ -61,9 +62,7 @@ export default {
   let startDate = new Date(endDate);
 
   // Ajuste do `startDate
-  if (interval === "hourly") {
-    startDate.setDate(endDate.getDate() - period);
-  } else if (interval === "daily") {
+  if (interval === "daily") {
     startDate.setDate(endDate.getDate() - period); 
   }
 
