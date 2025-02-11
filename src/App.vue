@@ -9,8 +9,8 @@
     },
     data() {
       return {
-        flagOne: 'USD',
-        flagTwo: 'EUR',
+        flagOne: 'EUR',
+        flagTwo: 'USD',
         currenciesName: null,
         isDropdownOpenOne: false,
         isDropdownOpenTwo: false,
@@ -36,7 +36,7 @@
         }
 
 
-        // Previne a troca de moeda para o mesmo valor
+        // To no select two currencies with the same value
         if (this.flagOne === this.flagTwo) {
           window.location.reload()
         }
