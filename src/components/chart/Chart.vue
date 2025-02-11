@@ -1,23 +1,3 @@
-<template>
-  <div>
-    <div class="labels-container">
-      <button
-        v-for="(label, index) in labels"
-        :key="index"
-        class="label-button"
-        :class="{ active: selectedLabel === label.value }"
-        @click="handleLabelClick(label.value)"
-      >
-        {{ label.label }}
-      </button>
-    </div>
-    
-    <div class="chart-container">
-      <canvas ref="chartCanvas"></canvas>
-    </div>
-  </div>
-</template>
-
 <script>
 import { ref, onMounted , watch} from "vue";
 import { Chart, registerables } from "chart.js";
@@ -55,20 +35,20 @@ export default {
   const interval = labelObj.interval;
   const period = labelObj.period;
 
-  // Getting date e removin 1 minuto to not stay in the future"
+  // Getting date e removing 1 minuto to not stay in the future"
   const endDate = new Date();
   endDate.setMinutes(endDate.getMinutes() - 1);
 
   let startDate = new Date(endDate);
 
-  // Ajuste do `startDate
+  
   if (interval === "daily") {
     startDate.setDate(endDate.getDate() - period); 
   }
 
-  // Função para formatar data e hora no padrão UTC (YYYY-MM-DD-HH:MM)
+  // Function to format the date into UTC standard (YYYY-MM-DD-HH:MM)
   const formatDateTimeUTC = (date) => {
-    return date.toISOString().slice(0, 16).replace("T", "-"); // Formato correto `YYYY-MM-DD-HH:MM`
+    return date.toISOString().slice(0, 16).replace("T", "-");
   };
 
   const formattedStartDate = formatDateTimeUTC(startDate);
@@ -117,7 +97,7 @@ export default {
               borderColor: "black",
               borderWidth: 1,
               fill: false,
-              pointRadius: 0, // Esconde os pontos padrão
+              pointRadius: 0,
               pointHoverRadius: 5
             }
           ]
@@ -128,13 +108,13 @@ export default {
             legend: { display: false }
           },
           interaction: {
-        mode: "index", // Garante que todos os pontos na mesma posição X fiquem visíveis
-        intersect: false,
+          mode: "index", 
+          intersect: false,
       },
           scales: {
             x: { display: false },
             y: { 
-          position: "right", // Move os valores do eixo Y para a direita
+            position: "right",
         }
           }
         }
@@ -170,7 +150,25 @@ export default {
 };
 </script>
 
-
+<template>
+  <div>
+    <div class="labels-container">
+      <button
+        v-for="(label, index) in labels"
+        :key="index"
+        class="label-button"
+        :class="{ active: selectedLabel === label.value }"
+        @click="handleLabelClick(label.value)"
+      >
+        {{ label.label }}
+      </button>
+    </div>
+    
+    <div class="chart-container">
+      <canvas ref="chartCanvas"></canvas>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .labels-container {
@@ -179,11 +177,11 @@ export default {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 1rem;
   margin:2.4rem 0 3.6rem 0;
   
   .label-button {
-    padding: 10px;
+    padding: 1rem;
     border: none;
     background-color: #ccc;
     cursor: pointer;
