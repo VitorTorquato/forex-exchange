@@ -56,16 +56,18 @@
         var reconnectInterval = 1000 * 10
         const ws = new WebSocket('wss://marketdata.tradermade.com/feedadv');
         
+        const symbol = `${this.flagOne}${this.flagTwo}`
       
         ws.onopen = () => {
           console.log('Connected')
           
           const data = {
             userKey : "wskPdYesHYRpruxLFFFw",
-            symbol: "EURUSD",
+            symbol: symbol,
           
           }
           ws.send(JSON.stringify(data))
+          console.log(symbol)
           console.log(data)
         }
 
@@ -75,10 +77,7 @@
           if(response.ts && response.bid){
             const ts = response.ts;
             const mid = response.mid
-            
-            console.log(ts)
-            console.log(mid)
-
+        
             this.exchangeRate = mid.toFixed(4);
            
           }
