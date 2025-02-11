@@ -53,7 +53,7 @@
 
       connectWebSocket(){
 
-        
+        var reconnectInterval = 1000 * 10
         const ws = new WebSocket('wss://marketdata.tradermade.com/feedadv');
         
       
@@ -83,6 +83,14 @@
           }
 
         }
+
+        ws.onclose = () => {
+        console.log('socket close : will reconnect in' + reconnectInterval);
+        setTimeout(() => {
+
+          this.connectWebSocket();
+        }, reconnectInterval);
+      }
       }
     },
     mounted() {
