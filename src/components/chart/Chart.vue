@@ -45,7 +45,7 @@ export default {
     
     ]);
 
-    const fetchData = async () => {
+   const fetchData = async () => {
       if (!props.currency1 || !props.currency2) {
       console.error("Currency not defined");
       return;

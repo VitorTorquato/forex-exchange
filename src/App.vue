@@ -14,8 +14,8 @@
         currenciesName: null,
         isDropdownOpenOne: false,
         isDropdownOpenTwo: false,
-        exchangeRate: null, // Valor da taxa de câmbio
-        percentageChange: null,
+        exchangeRate: null, 
+       
       };
     },
     methods: {
@@ -74,12 +74,13 @@
 
           if(response.ts && response.bid){
             const ts = response.ts;
-            const bid = response.bid
-            console.log('timeStamp:', ts)
-            console.log('bid:', bid)
+            const mid = response.mid
+            
+            console.log(ts)
+            console.log(mid)
 
-            this.exchangeRate = ts;
-            this.percentageChange = bid
+            this.exchangeRate = mid.toFixed(4);
+           
           }
 
         }
@@ -94,7 +95,7 @@
       }
     },
     mounted() {
-      this.handleFetchCurrencyData();
+   this.handleFetchCurrencyData();
       this.connectWebSocket();
     }
   };
@@ -168,9 +169,9 @@
               <span class="currency">{{ flagOne }}/{{ flagTwo }}</span>
             </div>
 
-            <div class="currency-compare">
+            <div class="currency-price">
               <span>$ {{ exchangeRate }}</span>
-              <span class="porcentage">{{ percentageChange }}</span>
+          
             </div>
           </div>
 
@@ -340,16 +341,14 @@
             }
           }
 
-          .currency-compare {
+          .currency-price {
             
               text-align: end;
-
-              span{
-                font-size: 2rem;
-                font-weight: bold;
-                @media(max-width:425px){
+              font-size: 2rem;
+              font-weight: bold;
+               
+              @media(max-width:425px){
                   font-size: 1.4rem;
-                }
               }
           
             .porcentage{

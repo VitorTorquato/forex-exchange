@@ -1,29 +1,20 @@
 # Forex-Exchange
+A Vue.js application for comparing real-time forex exchange rates. Users can select two currencies and view exchange rate trends on a chart over different time periods (5 days, 2 weeks, 1 month, 6 months, and 1 year).
 
-This template should help get you started developing with Vue 3 in Vite.
+## Installation and Setup
 
-## Recommended IDE Setup
+1. Clone the repository:
+   ```bash
+   git clone <https://github.com/VitorTorquato/forex-exchange>
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+2. Install dependencies:
 
-## Customize configuration
+    npm install
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+4. Start the development server
 
-## Project Setup
+   npm run dev
 
-```sh
-npm install
-```
+6. Open your browser and navigate to
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+      http://localhost:5173/
