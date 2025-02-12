@@ -14,15 +14,13 @@
         currenciesName: null,
         isDropdownOpenOne: false,
         isDropdownOpenTwo: false,
-        exchangeRate: null, 
-       
+        exchangeRate: null,   
       };
     },
     methods: {
       toggleDropdown(flagType) {
         if (flagType === 'one') {
           this.isDropdownOpenOne = !this.isDropdownOpenOne;
-         
         } else if (flagType === 'two') {
           this.isDropdownOpenTwo = !this.isDropdownOpenTwo;
         }
@@ -35,66 +33,67 @@
           this.flagTwo = currency;
         }
 
-
         // To no select two currencies with the same value
         if (this.flagOne === this.flagTwo) {
           window.location.reload()
-        }
-
-        
+        }        
       },
 
       async handleFetchCurrencyData() {
-        const req = await fetch(`https://marketdata.tradermade.com/api/v1/live_currencies_list?api_key=bcPlgfur113zCz71ZrMm`);
-        const data = await req.json();
-        this.currenciesName = Object.keys(data.available_currencies);
-      
+        try {
+          const req = await fetch(`https://marketdata.tradermade.com/api/v1/live_currencies_list?api_key=bcPlgfur113zCz71ZrMm`);
+          const data = await req.json();
+          this.currenciesName = Object.keys(data.available_currencies);
+        }catch (error) {
+          console.error('[API]: Failed to fetch currency data!');
+        }
       },
 
       connectWebSocket(){
-
-        var reconnectInterval = 1000 * 10
+        const reconnectInterval = 1000 * 10
         const ws = new WebSocket('wss://marketdata.tradermade.com/feedadv');
         
         const symbol = `${this.flagOne}${this.flagTwo}`
       
         ws.onopen = () => {
-          console.log('Connected')
+          console.log('[Socket] Connected');
           
           const data = {
             userKey : "wskPdYesHYRpruxLFFFw",
-            symbol: symbol,
+            symbol,
           
           }
+
           ws.send(JSON.stringify(data))
-          console.log(symbol)
-          console.log(data)
+          console.log('[Socket] Sent data', data);
         }
 
         ws.onmessage = (event) => {
-          const response = JSON.parse(event.data);
+          try {
+          const response = JSON.parse(event?.data);
 
-          if(response.ts && response.bid){
-            const ts = response.ts;
-            const mid = response.mid
-        
+          if (response.bid) {
+            const mid = response.mid;
+
             this.exchangeRate = mid.toFixed(4);
-           
           }
+        } catch (error) {
+          console.error('[Socket]: Failed to handle recevied data.', error);
+        }
 
         }
 
         ws.onclose = () => {
-        console.log('socket close : will reconnect in' + reconnectInterval);
-        setTimeout(() => {
+        console.log('[Socket] Closed; Reconnecting in' + reconnectInterval);
 
+        setTimeout(() => {
           this.connectWebSocket();
         }, reconnectInterval);
       }
       }
     },
     mounted() {
-   this.handleFetchCurrencyData();
+      this.handleFetchCurrencyData();
       this.connectWebSocket();
     }
   };

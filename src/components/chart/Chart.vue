@@ -41,7 +41,6 @@ export default {
 
   let startDate = new Date(endDate);
 
-  
   if (interval === "daily") {
     startDate.setDate(endDate.getDate() - period); 
   }
@@ -56,7 +55,6 @@ export default {
 
   let currencyPair = `${props.currency1}${props.currency2}`;
   
-  // Construção da URL com parâmetros corretos
   let url = `https://marketdata.tradermade.com/api/v1/timeseries?currency=${currencyPair}&api_key=bcPlgfur113zCz71ZrMm&start_date=${formattedStartDate}&end_date=${formattedEndDate}&format=records`;
 
   if (interval !== "daily") {
@@ -66,17 +64,16 @@ export default {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    //console.log("Data received:", data);
 
-    if (data.quotes) {
+    if (data?.quotes) {
       labelsData.value = data.quotes.map(quote => quote.date);
       chartData.value = data.quotes.map(quote => quote.close);
       createChart();
     } else {
-      console.error("Erro na resposta da API:", data);
+      throw new Error('Chart data missing.');
     }
   } catch (error) {
-    throw new Error('Errod to get data' , error);
+    console.error('[API]: Something went wrong.', error);
   }
 };
 
