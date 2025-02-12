@@ -191,7 +191,7 @@ export default {
             </div>
 
             <div class="currency-price">
-              <span>$ {{ exchangeRate }}</span>
+              <span>1 {{ flagOne }} = ${{ exchangeRate }} {{ flagTwo }}</span>
             </div>
           </div>
 
@@ -366,16 +366,6 @@ export default {
 
           @media (max-width: 425px) {
             font-size: 1.4rem;
-          }
-
-          .porcentage {
-            font-size: 1.4rem;
-            color: rgb(45, 184, 45);
-            display: block;
-
-            @media (max-width: 425px) {
-              font-size: 1rem;
-            }
           }
         }
       }
