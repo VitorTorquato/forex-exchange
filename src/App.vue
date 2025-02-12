@@ -308,10 +308,6 @@ export default {
           background-color: #f0f0f0;
         }
 
-        .swap-icon {
-          cursor: pointer;
-        }
-
         @media (min-width: 769px) {
           width: 30%;
         }

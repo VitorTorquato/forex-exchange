@@ -20,7 +20,7 @@ A Vue.js application for comparing real-time forex exchange rates. Users can sel
 
 4. Open your browser and navigate to:
    ```
-   http://localhost:5173/
+   http://localhost:5174/
    ```
 
 ## Fixing Prettier Errors
