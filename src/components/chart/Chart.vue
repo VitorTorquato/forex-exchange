@@ -1,13 +1,13 @@
 <script>
-import { ref, onMounted , watch} from "vue";
+import { ref, onMounted, watch } from "vue";
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
 export default {
-  props:{
-    currency1:String,
-    currency2:String
+  props: {
+    currency1: String,
+    currency2: String,
   },
   setup(props) {
     const chartCanvas = ref(null);
@@ -22,67 +22,67 @@ export default {
       { label: "1 Month", value: "1Month", interval: "daily", period: 30 },
       { label: "6 Months", value: "6Months", interval: "daily", period: 182 },
       { label: "1 Year", value: "1Year", interval: "daily", period: 365 },
-    
     ]);
 
-   const fetchData = async () => {
+    const fetchData = async () => {
       if (!props.currency1 || !props.currency2) {
-      console.error("Currency not defined");
-      return;
-    }
+        console.error("Currency not defined");
+        return;
+      }
 
-  const labelObj = labels.value.find(label => label.value === selectedLabel.value);
-  const interval = labelObj.interval;
-  const period = labelObj.period;
+      const labelObj = labels.value.find(
+        (label) => label.value === selectedLabel.value,
+      );
+      const interval = labelObj.interval;
+      const period = labelObj.period;
 
-  // Getting date e removing 1 minuto to not stay in the future"
-  const endDate = new Date();
-  endDate.setMinutes(endDate.getMinutes() - 1);
+      // Getting date e removing 1 minuto to not stay in the future"
+      const endDate = new Date();
+      endDate.setMinutes(endDate.getMinutes() - 1);
 
-  let startDate = new Date(endDate);
+      let startDate = new Date(endDate);
 
-  if (interval === "daily") {
-    startDate.setDate(endDate.getDate() - period); 
-  }
+      if (interval === "daily") {
+        startDate.setDate(endDate.getDate() - period);
+      }
 
-  // Function to format the date into UTC standard (YYYY-MM-DD-HH:MM)
-  const formatDateTimeUTC = (date) => {
-    return date.toISOString().slice(0, 16).replace("T", "-");
-  };
+      // Function to format the date into UTC standard (YYYY-MM-DD-HH:MM)
+      const formatDateTimeUTC = (date) => {
+        return date.toISOString().slice(0, 16).replace("T", "-");
+      };
 
-  const formattedStartDate = formatDateTimeUTC(startDate);
-  const formattedEndDate = formatDateTimeUTC(endDate);
+      const formattedStartDate = formatDateTimeUTC(startDate);
+      const formattedEndDate = formatDateTimeUTC(endDate);
 
-  let currencyPair = `${props.currency1}${props.currency2}`;
-  
-  let url = `https://marketdata.tradermade.com/api/v1/timeseries?currency=${currencyPair}&api_key=bcPlgfur113zCz71ZrMm&start_date=${formattedStartDate}&end_date=${formattedEndDate}&format=records`;
+      let currencyPair = `${props.currency1}${props.currency2}`;
 
-  if (interval !== "daily") {
-    url += `&interval=${interval}&period=${period}`;
-  }
+      let url = `https://marketdata.tradermade.com/api/v1/timeseries?currency=${currencyPair}&api_key=bcPlgfur113zCz71ZrMm&start_date=${formattedStartDate}&end_date=${formattedEndDate}&format=records`;
 
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
+      if (interval !== "daily") {
+        url += `&interval=${interval}&period=${period}`;
+      }
 
-    if (data?.quotes) {
-      labelsData.value = data.quotes.map(quote => quote.date);
-      chartData.value = data.quotes.map(quote => quote.close);
-      createChart();
-    } else {
-      throw new Error('Chart data missing.');
-    }
-  } catch (error) {
-    console.error('[API]: Something went wrong.', error);
-  }
-};
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
 
+        if (data?.quotes) {
+          labelsData.value = data.quotes.map((quote) => quote.date);
+          chartData.value = data.quotes.map((quote) => quote.close);
+          createChart();
+        } else {
+          throw new Error("Chart data missing.");
+        }
+      } catch (error) {
+        console.error("[API]: Something went wrong.", error);
+      }
+    };
 
     const createChart = () => {
       if (chartInstance) {
         chartInstance.destroy();
       }
-      
+
       chartInstance = new Chart(chartCanvas.value, {
         type: "line",
         data: {
@@ -95,26 +95,26 @@ export default {
               borderWidth: 1,
               fill: false,
               pointRadius: 0,
-              pointHoverRadius: 5
-            }
-          ]
+              pointHoverRadius: 5,
+            },
+          ],
         },
         options: {
           responsive: true,
           plugins: {
-            legend: { display: false }
+            legend: { display: false },
           },
           interaction: {
-          mode: "index", 
-          intersect: false,
-      },
+            mode: "index",
+            intersect: false,
+          },
           scales: {
             x: { display: false },
-            y: { 
-            position: "right",
-        }
-          }
-        }
+            y: {
+              position: "right",
+            },
+          },
+        },
       });
     };
 
@@ -123,14 +123,17 @@ export default {
       fetchData();
     };
 
-    watch(() => [props.currency1, props.currency2], ([newCurrency1, newCurrency2], [oldCurrency1, oldCurrency2]) => {
-    if (newCurrency1 !== oldCurrency1 || newCurrency2 !== oldCurrency2) {
-      fetchData();
-    }
-  });
+    watch(
+      () => [props.currency1, props.currency2],
+      ([newCurrency1, newCurrency2], [oldCurrency1, oldCurrency2]) => {
+        if (newCurrency1 !== oldCurrency1 || newCurrency2 !== oldCurrency2) {
+          fetchData();
+        }
+      },
+    );
 
     onMounted(() => {
-      createChart()
+      createChart();
       fetchData();
     });
 
@@ -138,12 +141,9 @@ export default {
       labels,
       selectedLabel,
       handleLabelClick,
-      chartCanvas
-    }
-    
-    
+      chartCanvas,
+    };
   },
- 
 };
 </script>
 
@@ -160,7 +160,7 @@ export default {
         {{ label.label }}
       </button>
     </div>
-    
+
     <div class="chart-container">
       <canvas ref="chartCanvas"></canvas>
     </div>
@@ -175,8 +175,8 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-  margin:2.4rem 0 3.6rem 0;
-  
+  margin: 2.4rem 0 3.6rem 0;
+
   .label-button {
     padding: 1rem;
     border: none;
@@ -188,28 +188,25 @@ export default {
   }
 
   .label-button.active {
-    background-color:transparent;
+    background-color: transparent;
     color: #121212;
     border: 1px solid #121212;
   }
 }
-
-
 
 .chart-container {
   width: 100%;
 }
 
 /*responsive layout*/
-@media(max-width:425px){
-    .labels-container{
-      gap: .5rem;
-      justify-content: flex-start;
+@media (max-width: 425px) {
+  .labels-container {
+    gap: 0.5rem;
+    justify-content: flex-start;
 
-      .label-button{
-        font-size: 1rem;
-      }
-
+    .label-button {
+      font-size: 1rem;
     }
+  }
 }
 </style>
