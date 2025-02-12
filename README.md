@@ -5,16 +5,28 @@ A Vue.js application for comparing real-time forex exchange rates. Users can sel
 
 1. Clone the repository:
    ```bash
-   git clone <https://github.com/VitorTorquato/forex-exchange>
+   git clone https://github.com/VitorTorquato/forex-exchange
+   ```
 
 2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-    npm install
-
-4. Start the development server
-
+3. Start the development server:
+   ```bash
    npm run dev
+   ```
 
-6. Open your browser and navigate to
+4. Open your browser and navigate to:
+   ```
+   http://localhost:5173/
+   ```
 
-      http://localhost:5173/
+## Fixing Prettier Errors
+If you encounter formatting issues due to Prettier, run the following command to fix them:
+   ```bash
+   npm run lint:fix
+   ```
+
+

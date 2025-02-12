@@ -191,7 +191,7 @@ export default {
             </div>
 
             <div class="currency-price">
-              <span>1 {{ flagOne }} = ${{ exchangeRate }} {{ flagTwo }}</span>
+              <span>1 {{ flagOne }} = {{ exchangeRate }} {{ flagTwo }}</span>
             </div>
           </div>
 
